@@ -4,11 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/sashabaranov/go-openai"
 	"io"
 	"start-feishubot/initialization"
 	customOpenai "start-feishubot/services/openai"
-
-	"github.com/sashabaranov/go-openai"
 )
 
 type Messages struct {
@@ -40,7 +39,7 @@ func (c *ChatGPT) StreamChat(ctx context.Context,
 			Content: m.Content,
 		}
 	}
-	return c.StreamChatWithHistory(ctx, chatMsgs, 4000,
+	return c.StreamChatWithHistory(ctx, chatMsgs, 2000,
 		responseStream)
 }
 
@@ -53,7 +52,7 @@ func (c *ChatGPT) StreamChatWithHistory(ctx context.Context, msg []openai.ChatCo
 	client := openai.NewClientWithConfig(config)
 	//pp.Printf("client: %v", client)
 	req := openai.ChatCompletionRequest{
-		Model:       openai.GPT4,
+		Model:       openai.GPT3Dot5Turbo,
 		Messages:    msg,
 		N:           1,
 		Temperature: 0.7,
